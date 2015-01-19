@@ -35,7 +35,7 @@ var NodeMisfit = (function () {
                 .send({
                     grant_type: 'authorization_code',
                     code: code,
-                    redirect_uri: redirectUri,
+                    redirect_uri: setup.redirectUri,
                     client_id: setup.clientId,
                     client_secret: setup.clientSecret
                 })
