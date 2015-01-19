@@ -4,5 +4,6 @@
     "version": "0.0.1",
     "private": true,
     "dependencies": {
+        "superagent": "0.21.x"
     }
 }
