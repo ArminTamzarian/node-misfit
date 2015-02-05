@@ -14,6 +14,9 @@ var NodeMisfit = (function () {
 
     var PATH_RESOURCE_PROFILE = '/move/resource/v1/user/%s/profile';
     var PATH_RESOURCE_DEVICE = '/move/resource/v1/user/%s/device';
+    var PATH_RESOURCE_GOALS = '/move/resource/v1/user/%s/activity/goals';
+    var PATH_RESOURCE_SESSIONS = '/move/resource/v1/user/%s/activity/sessions';
+    var PATH_RESOURCE_SLEEPS = '/move/resource/v1/user/%s/activity/sleeps';
 
     var nodeMisfit = function (options) {
         options = options || {};
@@ -77,6 +80,18 @@ var NodeMisfit = (function () {
 
         this.getDevice = function (accessToken, userId, callback) {
             getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_DEVICE), userId, callback);
+        };
+
+        this.getGoals = function (accessToken, userId, callback) {
+            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_GOALS), userId, callback);
+        };
+
+        this.getSessions = function (accessToken, userId, callback) {
+            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_SESSIONS), userId, callback);
+        };
+
+        this.getSleeps = function (accessToken, userId, callback) {
+            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_SLEEPS), userId, callback);
         };
     };
 
