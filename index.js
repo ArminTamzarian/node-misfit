@@ -50,7 +50,7 @@ var NodeMisfit = (function () {
                         return callback(err);
                     }
 
-                    callback(null, JSON.parse(response));
+                    callback(null, response.body.access_token);
                 });
         };
 
