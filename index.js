@@ -70,8 +70,6 @@ var NodeMisfit = (function () {
 
                     callback(null, response);
                 });
-
-            callback();
         };
     };
 
