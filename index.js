@@ -6,7 +6,6 @@ var util = require('util');
 
 var NodeMisfit = (function () {
     var MISFIT_CLOUD_BASE_URL = 'https://api.misfitwearables.com';
-    var MISFIT_HEADER_ACCESS_TOKEN = 'access_token';
     var MISFIT_DEFAULT_USERID = 'me';
 
     var PATH_AUTH_AUTHORIZE = '/auth/dialog/authorize';
@@ -65,7 +64,7 @@ var NodeMisfit = (function () {
             request
             .get(util.format(requestPath, userId))
             .query(queryParameters)
-            .set(MISFIT_HEADER_ACCESS_TOKEN, accessToken)
+            .set('Authorization', util.format('Bearer %s', accessToken))
             .end(function (err, response) {
                 if (err) {
                     return callback(err);
