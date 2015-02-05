@@ -25,7 +25,7 @@ var NodeMisfit = (function () {
             clientId: options.clientId || '',
             clientSecret: options.clientSecret || '',
             redirectUri: options.redirectUri || '',
-            scope: options.scope || 'public,birthday,email'
+            scope: options.scope || 'public,birthday,email,tracking,session,sleeps'
         };
 
         this.getAuthorizeUrl = function () {
@@ -84,7 +84,6 @@ var NodeMisfit = (function () {
         };
 
         this.getGoals = function (accessToken, startDate, endDate, userId, callback) {
-            console.log(startDate, endDate);
             getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_GOALS), {
                 start_date: startDate,
                 end_date: endDate
@@ -92,7 +91,6 @@ var NodeMisfit = (function () {
         };
 
         this.getSessions = function (accessToken, startDate, endDate, userId, callback) {
-            console.log(startDate, endDate);
             getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_SESSIONS), {
                 start_date: startDate,
                 end_date: endDate
@@ -100,7 +98,6 @@ var NodeMisfit = (function () {
         };
 
         this.getSleeps = function (accessToken, startDate, endDate, userId, callback) {
-            console.log(startDate, endDate);
             getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_SLEEPS), {
                 start_date: startDate,
                 end_date: endDate
