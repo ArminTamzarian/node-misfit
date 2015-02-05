@@ -56,7 +56,7 @@ var NodeMisfit = (function () {
                 });
         };
 
-        var getResource = function (accessToken, requestPath, userId, callback) {
+        var getResource = function (accessToken, requestPath, queryParameters, userId, callback) {
             if (typeof(callback) === 'undefined') {
                 callback = userId;
                 userId = MISFIT_DEFAULT_USERID;
@@ -64,6 +64,7 @@ var NodeMisfit = (function () {
 
             request
             .get(util.format(requestPath, userId))
+            .query(queryParameters)
             .set(MISFIT_HEADER_ACCESS_TOKEN, accessToken)
             .end(function (err, response) {
                 if (err) {
@@ -75,23 +76,32 @@ var NodeMisfit = (function () {
         }
 
         this.getProfile = function (accessToken, userId, callback) {
-            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_PROFILE), userId, callback);
+            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_PROFILE), {}, userId, callback);
         };
 
         this.getDevice = function (accessToken, userId, callback) {
-            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_DEVICE), userId, callback);
+            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_DEVICE), {}, userId, callback);
         };
 
-        this.getGoals = function (accessToken, userId, callback) {
-            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_GOALS), userId, callback);
+        this.getGoals = function (accessToken, startDate, endDate, userId, callback) {
+            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_GOALS), {
+                start_date: startDate,
+                end_date: endDate
+            }, userId, callback);
         };
 
-        this.getSessions = function (accessToken, userId, callback) {
-            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_SESSIONS), userId, callback);
+        this.getSessions = function (accessToken, startDate, endDate, userId, callback) {
+            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_SESSIONS), {
+                start_date: startDate,
+                end_date: endDate
+            }, userId, callback);
         };
 
-        this.getSleeps = function (accessToken, userId, callback) {
-            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_SLEEPS), userId, callback);
+        this.getSleeps = function (accessToken, startDate, endDate, userId, callback) {
+            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_SLEEPS), {
+                start_date: startDate,
+                end_date: endDate
+            }, userId, callback);
         };
     };
 
