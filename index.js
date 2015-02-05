@@ -65,7 +65,7 @@ var NodeMisfit = (function () {
                 .set(MISFIT_HEADER_ACCESS_TOKEN, accessToken)
                 .end(function (err, response) {
                     if (err) {
-                        callback(err);
+                        return callback(err);
                     }
 
                     callback(null, response);
