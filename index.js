@@ -48,7 +48,7 @@ var NodeMisfit = (function () {
                         return callback(err);
                     }
 
-                    callback(null, response);
+                    callback(null, JSON.parse(response));
                 });
         };
 
@@ -68,7 +68,7 @@ var NodeMisfit = (function () {
                         return callback(err);
                     }
 
-                    callback(null, response);
+                    callback(null, JSON.parse(response.text));
                 });
         };
     };
