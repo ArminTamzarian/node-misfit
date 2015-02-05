@@ -13,6 +13,7 @@ var NodeMisfit = (function () {
     var PATH_AUTH_EXCHANGE_TOKEN = '/auth/tokens/exchange';
 
     var PATH_RESOURCE_PROFILE = '/move/resource/v1/user/%s/profile';
+    var PATH_RESOURCE_DEVICE = '/move/resource/v1/user/%s/device';
 
     var nodeMisfit = function (options) {
         options = options || {};
@@ -52,24 +53,30 @@ var NodeMisfit = (function () {
                 });
         };
 
-        this.getProfile = function (accessToken, userId, callback) {
+        var getResource = function (accessToken, requestPath, userId, callback) {
             if (typeof(callback) === 'undefined') {
                 callback = userId;
                 userId = MISFIT_DEFAULT_USERID;
             }
 
-            var resourceUrl = util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_PROFILE);
-
             request
-                .get(util.format(resourceUrl, userId))
-                .set(MISFIT_HEADER_ACCESS_TOKEN, accessToken)
-                .end(function (err, response) {
-                    if (err) {
-                        return callback(err);
-                    }
+            .get(util.format(requestPath, userId))
+            .set(MISFIT_HEADER_ACCESS_TOKEN, accessToken)
+            .end(function (err, response) {
+                if (err) {
+                    return callback(err);
+                }
 
-                    callback(null, response.body);
-                });
+                callback(null, response.body);
+            });
+        }
+
+        this.getProfile = function (accessToken, userId, callback) {
+            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_PROFILE), userId, callback);
+        };
+
+        this.getDevice = function (accessToken, userId, callback) {
+            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_DEVICE), userId, callback);
         };
     };
 
