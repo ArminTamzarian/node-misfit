@@ -44,6 +44,8 @@ var NodeMisfit = (function () {
                     client_secret: setup.clientSecret
                 })
                 .end(function (err, response) {
+                    console.log(response);
+
                     if(err) {
                         return callback(err);
                     }
@@ -64,6 +66,7 @@ var NodeMisfit = (function () {
                 .get(util.format(resourceUrl, userId))
                 .set(MISFIT_HEADER_ACCESS_TOKEN, accessToken)
                 .end(function (err, response) {
+                    console.log(response);
                     if (err) {
                         return callback(err);
                     }
