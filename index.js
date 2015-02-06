@@ -14,6 +14,7 @@ var NodeMisfit = (function () {
     var PATH_RESOURCE_PROFILE = '/move/resource/v1/user/%s/profile';
     var PATH_RESOURCE_DEVICE = '/move/resource/v1/user/%s/device';
     var PATH_RESOURCE_GOALS = '/move/resource/v1/user/%s/activity/goals';
+    var PATH_RESOURCE_SUMMARY = 'move/resource/v1/user/%s/activity/summary';
     var PATH_RESOURCE_SESSIONS = '/move/resource/v1/user/%s/activity/sessions';
     var PATH_RESOURCE_SLEEPS = '/move/resource/v1/user/%s/activity/sleeps';
 
@@ -62,16 +63,16 @@ var NodeMisfit = (function () {
             }
 
             request
-            .get(util.format(requestPath, userId))
-            .query(queryParameters)
-            .set('Authorization', util.format('Bearer %s', accessToken))
-            .end(function (err, response) {
-                if (err) {
-                    return callback(err);
-                }
+                .get(util.format(requestPath, userId))
+                .query(queryParameters)
+                .set('Authorization', util.format('Bearer %s', accessToken))
+                .end(function (err, response) {
+                    if (err) {
+                        return callback(err);
+                    }
 
-                callback(null, response.body);
-            });
+                    callback(null, response.body);
+                });
         }
 
         this.getProfile = function (accessToken, userId, callback) {
@@ -86,6 +87,14 @@ var NodeMisfit = (function () {
             getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_GOALS), {
                 start_date: startDate,
                 end_date: endDate
+            }, userId, callback);
+        };
+
+        this.getSummary = function (accessToken, startDate, endDate, userId, callback) {
+            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_SUMMARY), {
+                start_date: startDate,
+                end_date: endDate,
+                detail: true
             }, userId, callback);
         };
 
