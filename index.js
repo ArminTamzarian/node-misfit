@@ -14,7 +14,7 @@ var NodeMisfit = (function () {
     var PATH_RESOURCE_PROFILE = '/move/resource/v1/user/%s/profile';
     var PATH_RESOURCE_DEVICE = '/move/resource/v1/user/%s/device';
     var PATH_RESOURCE_GOALS = '/move/resource/v1/user/%s/activity/goals';
-    var PATH_RESOURCE_SUMMARY = 'move/resource/v1/user/%s/activity/summary';
+    var PATH_RESOURCE_SUMMARY = '/move/resource/v1/user/%s/activity/summary';
     var PATH_RESOURCE_SESSIONS = '/move/resource/v1/user/%s/activity/sessions';
     var PATH_RESOURCE_SLEEPS = '/move/resource/v1/user/%s/activity/sleeps';
 
