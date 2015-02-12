@@ -68,7 +68,7 @@ var NodeMisfit = (function () {
         /**
         * Checks to see if the supplied object is a function
         *
-        * @param {Object obj} Object to test if it is a function
+        * @param {Object} obj - Object to test if it is a function
         * @private
         */
         var isFunction = function (obj) {
@@ -76,7 +76,10 @@ var NodeMisfit = (function () {
         };
 
         /**
+        * Validate that required parameters have been provided to the function call.
         *
+        * @param {Array<String>} parameters - Supplied parameter values
+        * @private
         */
         var checkRequired = function(parameters) {
             var missing = [];
@@ -97,7 +100,11 @@ var NodeMisfit = (function () {
         };
 
         /**
+        * Validate supplied date strings for conformance with Misfit Cloud API requirements.
         *
+        * @param {String} startDate - Beginning range for the resource query
+        * @param {String} endDate - End range for the resource query
+        * @private
         */
         var validateDates = function (startDate, endDate) {
             var startMoment = moment(startDate, "YYYY-MM-DD");
@@ -331,7 +338,11 @@ var NodeMisfit = (function () {
         };
 
         /**
+        * Handle subscription request from Misfit Cloud API
         *
+        * @param {Object} data - Subscription Amazon SNS message from Misfit Cloud API
+        * @param {Function(err, sleeps)} callback - Optional callback to execute on completion of the request
+        * @public
         */
         this.handleSubscription = function(data, callback) {
             request
