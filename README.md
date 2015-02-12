@@ -38,14 +38,14 @@ misfitHandler.getProfile(user.accessToken, function(err, profile) {
 
 node-misfit constructor
 
+#### Parameters
 * `options` - (Object) Configuration options for the node-misfit object
  - `clientId` (String) Client ID for the Misfit API application `Default: ''`
  - `clientSecret` (String) Client secret for the Misfit API application `Default: ''`
  - `redirectUri` (String) URL to redirect the browser to after authorization requests `Default: ''`
  - `scope` (String) Data parameters to which requests should be limited `Default: 'public,birthday,email,tracking,session,sleeps'`
 
-
- Example:
+#### Example
  ```javascript
  var misfit = require('node-misfit');
 
@@ -56,20 +56,26 @@ node-misfit constructor
  });
  ```
 
+- - -
+
 ### getAuthorizeUrl()
 
 Get the authorization URL for the configured node-misfit object
 
 [Misfit - Authorize a 3rd-party app](https://build.misfit.com/docs/references#APIReferences-Authorize3rd-partyapptoaccessShinedata)
 
-Example:
+#### Example
 ```javascript
 misfitHandler.getAuthorizeUrl(); // -> https://api.misfitwearables.com/auth/dialog/authorize?response_type=code&client_id=...
 ```
 
+- - -
+
 ### getAccessToken(`authorizationCode`, [`callback`])
 
 Exchange a Misfit API authorization code for an access token
+
+[Misfit - Get access token from authorized code ](https://build.misfit.com/docs/references#APIReferences-Getaccesstokenfromauthorizedcode)
 
 #### Parameters
 * `authorizationCode` (String) The authorization code to exchange for an access token
@@ -78,18 +84,20 @@ Exchange a Misfit API authorization code for an access token
 #### Throws
 * `RequiredParameterError`: Argument `authorizationCode` required
 
-[Misfit - Get access token from authorized code ](https://build.misfit.com/docs/references#APIReferences-Getaccesstokenfromauthorizedcode)
-
-Example:
+#### Example
 ```javascript
 misfitHandler.getAccessToken(user.authCode, function(err, token){
     console.log(token); // -> 'afwfh384hg84uh348g34g8374hga874gh8a374gha8347gha8347'
 });
 ```
 
+- - -
+
 ### getProfile(`accessToken`, [`options`], [`callback`])
 
- Get the profile for the specified user.
+Get the profile for the specified user.
+
+[Misfit - Profile](https://build.misfit.com/docs/references#APIReferences-Profile)
 
 #### Parameters
  * `accessToken` (String)  - The user's access token to authenticate the request
@@ -101,9 +109,8 @@ misfitHandler.getAccessToken(user.authCode, function(err, token){
 #### Throws
  * `RequiredParameterError`: Argument `accessToken` required
 
- [Misfit - Profile](https://build.misfit.com/docs/references#APIReferences-Profile)
 
-Example:
+#### Example
 ```javascript
 misfitHandler.getProfile(user.accessToken, function(err, profile){
     console.log(profile);
@@ -121,6 +128,8 @@ misfitHandler.getProfile(user.accessToken, function(err, profile){
 
 Get the device information for the specified user.
 
+[Misfit - Device](https://build.misfit.com/docs/references#APIReferences-Device)
+
 #### Parameters
 * `accessToken` (String) The user's access token to authenticate the request
 * `options` (String) Optional set of options to configure the request.
@@ -131,9 +140,7 @@ Get the device information for the specified user.
 #### Throws
 * `RequiredParameterError`: Argument `accessToken` required
 
-[Misfit - Device](https://build.misfit.com/docs/references#APIReferences-Device)
-
-Example:
+#### Example
 ```javascript
 misfitHandler.getDevice(user.accessToken, function(err, device){
     console.log(device);
@@ -151,6 +158,8 @@ misfitHandler.getDevice(user.accessToken, function(err, device){
 
 Get the goal information for the specified user.
 
+[Misfit - Goal](https://build.misfit.com/docs/references#APIReferences-Goal)
+
 #### Parameters
 * `accessToken` (String) The user's access token to authenticate the request
 * `startDate` (String) Start date for the query `Format: 'YYYY-MM-DD'`
@@ -165,9 +174,7 @@ Get the goal information for the specified user.
 * `InvalidDateRangeError`: `startDate` must precede `endDate` and the duration may not exceed 30 days
 * `RequiredParameterError`: Arguments `accessToken`, `startDate`, `endDate` required
 
-[Misfit - Goal](https://build.misfit.com/docs/references#APIReferences-Goal)
-
-Example:
+#### Example
 ```javascript
 misfitHandler.getGoals(user.accessToken, '2013-11-05', '2013-11-08', function(err, goals){
     console.log(goals);
@@ -187,12 +194,17 @@ misfitHandler.getGoals(user.accessToken, '2013-11-05', '2013-11-08', function(er
 
 ### getSummary(`accessToken`, `startDate`, `endDate`, [`options`], [`callback`])
 
+Get the summary information for the specified user.
+
+[Misfit - Summary](https://build.misfit.com/docs/references#APIReferences-Summary)
+
 #### Parameters
 * `accessToken` (String) The user's access token to authenticate the request
 * `startDate` (String) Start date for the query `Format: 'YYYY-MM-DD'`
 * `endDate` (String) End date for the query `Format: 'YYYY-MM-DD'`
 * `options` (String) Optional set of options to configure the request.
  - `userId` (String) User id of the summary resource owner. `Default: 'me'`
+ - `detail` (Boolean) Print a summary for each day instead of rolling up the summary to a single entry `Default: false`
 * `callback` (Function(err, profile)) Optional callback to execute on completion of the request
 
 #### Throws
@@ -200,11 +212,9 @@ misfitHandler.getGoals(user.accessToken, '2013-11-05', '2013-11-08', function(er
 * `InvalidDateRangeError`: `startDate` must precede `endDate` and the duration may not exceed 30 days
 * `RequiredParameterError`: Arguments `accessToken`, `startDate`, `endDate` required
 
-[Misfit - Summary](https://build.misfit.com/docs/references#APIReferences-Summary)
-
-Example:
+#### Example
 ```javascript
-misfitHandler.getSummary(user.accessToken, '2013-11-05', '2013-11-08', function(err, summary){
+misfitHandler.getSummary(user.accessToken, '2013-11-05', '2013-11-08', {detail: true}, function(err, summary){
     console.log(summary);
     // -> {
     //      "summary": [
@@ -232,6 +242,10 @@ misfitHandler.getSummary(user.accessToken, '2013-11-05', '2013-11-08', function(
 
 ### getSessions(`accessToken`, `startDate`, `endDate`, [`options`], [`callback`])
 
+Get the session information for the specified user.
+
+[Misfit - Session](https://build.misfit.com/docs/references#APIReferences-Session)
+
 #### Parameters
 * `accessToken` (String) The user's access token to authenticate the request
 * `startDate` (String) Start date for the query `Format: 'YYYY-MM-DD'`
@@ -246,9 +260,7 @@ misfitHandler.getSummary(user.accessToken, '2013-11-05', '2013-11-08', function(
 * `InvalidDateRangeError`: `startDate` must precede `endDate` and the duration may not exceed 30 days
 * `RequiredParameterError`: Arguments `accessToken`, `startDate`, `endDate` required
 
-[Misfit - Session](https://build.misfit.com/docs/references#APIReferences-Session)
-
-Example:
+#### Example
 ```javascript
 misfitHandler.getSessions(user.accessToken, '2013-11-05', '2013-11-08', function(err, sessions){
     console.log(sessions);
@@ -271,6 +283,10 @@ misfitHandler.getSessions(user.accessToken, '2013-11-05', '2013-11-08', function
 
 ### getSleeps(`accessToken`, `startDate`, `endDate`, [`options`], [`callback`])
 
+Get the sleep information for the specified user.
+
+[Misfit - Sleep](https://build.misfit.com/docs/references#APIReferences-Sleep)
+
 #### Parameters
 * `accessToken` (String) The user's access token to authenticate the request
 * `startDate` (String) Start date for the query `Format: 'YYYY-MM-DD'`
@@ -285,32 +301,41 @@ misfitHandler.getSessions(user.accessToken, '2013-11-05', '2013-11-08', function
 * `InvalidDateRangeError`: `startDate` must precede `endDate` and the duration may not exceed 30 days
 * `RequiredParameterError`: Arguments `accessToken`, `startDate`, `endDate` required
 
-[Misfit - Sleep](https://build.misfit.com/docs/references#APIReferences-Sleep)
-
-Example:
+#### Example
 ```javascript
 misfitHandler.getSleeps(user.accessToken, '2013-11-05', '2013-11-08', function(err, sleeps){
     console.log(sleeps);
     //-> {
-    //     "sessions":[
+    //     "sleeps":[
     //       {
-    //         "id":"51a4189acf12e53f82000001",
-    //         "activityType":"Cycling",
-    //         "startTime":"2014-05-19T10:26:54-04:00",
-    //         "duration":900,
-    //         "points":210.8,
-    //         "steps":1406,
-    //         "calories":25.7325,
-    //         "distance":0.5125
+    //         "id":"51a4189acf12e53f80000003",
+    //         "autoDetected": false,
+    //         "startTime":"2014-05-19T23:26:54+07:00",
+    //         "duration": 0,
+    //         "sleepDetails":[
+    //           {
+    //             "datetime":"2014-05-19T23:26:54+07:00",
+    //             "value":2
+    //           },
+    //           {
+    //             "datetime":"2014-05-19T23:59:22+07:00",
+    //             "value":1
+    //           },
+    //           ...
+    //         ]
     //       },
     //       ...
     //     ]
     //   }
 ```
 
+- - -
+
 ### handleSubscription(`data`, [`callback`])
 
 Handle subscription request from Misfit Cloud API
+
+[Misfit - Confirm subscription ](https://build.misfit.com/docs/references#APIReferences-Confirmsubscription)
 
 #### Parameters
 * `data` (Object) Subscription Amazon SNS message from Misfit Cloud API
@@ -318,13 +343,6 @@ Handle subscription request from Misfit Cloud API
 
 #### Throws
 * `RequiredParameterError`: Argument `data` required
-
-[Misfit - Confirm subscription ](https://build.misfit.com/docs/references#APIReferences-Confirmsubscription)
-
-Example:
-```javascript
-
-```
 
 ## Exceptions
 
@@ -353,6 +371,12 @@ npm test
 ```
 
 ## Release notes
+
+### 0.1.1
+
+* Support for `detail` option in `getSummary`
+* Completed README with examples
+* Full JsDoc information for both public and private methods
 
 ### 0.1.0
 

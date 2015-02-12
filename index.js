@@ -292,6 +292,7 @@ var NodeMisfit = (function () {
         * @param {String} endDate - End date for the query (YYYY-MM-DD)
         * @param {String} options - Optional set of options to configure the request.
         *   {String} userId - User id of the summary owner. If not specified assumed to be 'me'
+        *   {Boolean} detail - Print a summary for each day instead of rolling up the summary to a single entry
         * @param {Function(err, summary)} callback - Optional callback to execute on completion of the request
         *
         * @throws {InvalidDateError} startDate and endDate must be valid dates in the format YYYY-MM-DD
@@ -311,7 +312,7 @@ var NodeMisfit = (function () {
             getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_SUMMARY), {
                 start_date: startDate,
                 end_date: endDate,
-                detail: true
+                detail: options.detail || false
             }, options.userId, undefined, callback);
         };
 
