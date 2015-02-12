@@ -1,9 +1,23 @@
 {
-    "name": "node-misfit",
-    "description": "node-misfit",
-    "version": "0.0.1",
-    "private": true,
-    "dependencies": {
-        "superagent": "0.21.x"
+    "name" : "node-misfit",
+    "description" : "NodeJS library for interfacing with the Misfit Cloud API.",
+    "version" : "0.0.1",
+    "author" : "Armin Tamzarian <tamzarian1989@gmail.com>",
+    "url" : "https://github.com/ArminTamzarian/node-misfit",
+    "keywords" : ["misfit", "shine", "cloud", "api"],
+    "repository" : {
+        "type" : "git",
+        "url"  : "https://github.com/ArminTamzarian/node-misfit"
+    },
+    "license" : "MIT",
+    "dependencies" : {
+        "moment" : "2.9.x",
+        "superagent" : "0.21.x"
+    },
+    "devDependencies" : {
+        "mocha" : "1.x"
+    },
+    "scripts" : {
+        "test" : "mocha -R spec test/test-*.js"
     }
 }
