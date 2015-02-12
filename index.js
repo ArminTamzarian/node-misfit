@@ -46,13 +46,12 @@ var NodeMisfit = (function () {
     /**
      * node-misfit constructor
      *
-     * Configuration options are as follows:
-     *   clientId {String} Client ID for the Misfit API application
-     *   clientSecret {String} Client secret for the Misfit API application
-     *   redirectUri {String} URL to redirect the browser to after authorization requests
-     *   scope {String} Data parameters to which requests should be limited
-     *
      * @param {Object} options - Configuration options for the node-misfit object
+     *   {String} clientId- Client ID for the Misfit API application
+     *   {String} clientSecret - Client secret for the Misfit API application
+     *   {String} redirectUri - URL to redirect the browser to after authorization requests
+     *   {String} scope - Data parameters to which requests should be limited
+     *
      * @public
      */
     var nodeMisfit = function (options) {
@@ -69,6 +68,7 @@ var NodeMisfit = (function () {
         * Checks to see if the supplied object is a function
         *
         * @param {Object} obj - Object to test if it is a function
+        *
         * @private
         */
         var isFunction = function (obj) {
@@ -79,6 +79,7 @@ var NodeMisfit = (function () {
         * Validate that required parameters have been provided to the function call.
         *
         * @param {Array<String>} parameters - Supplied parameter values
+        *
         * @private
         */
         var checkRequired = function(parameters) {
@@ -104,6 +105,7 @@ var NodeMisfit = (function () {
         *
         * @param {String} startDate - Beginning range for the resource query
         * @param {String} endDate - End range for the resource query
+        *
         * @private
         */
         var validateDates = function (startDate, endDate) {
@@ -135,6 +137,7 @@ var NodeMisfit = (function () {
         * @param {String} userId - Optional id for the user
         * @param {String} objectId - Optional object of the resource
         * @param {Function(err, resource)} callback - Optional callback to execute on completion of the request
+        *
         * @private
         */
         var getResource = function (accessToken, requestPath, queryParameters, userId, objectId, callback) {
@@ -158,6 +161,7 @@ var NodeMisfit = (function () {
         /**
         * Get the authorization URL for the configured node-misfit object
         *
+        * @see {@link https://build.misfit.com/docs/references#APIReferences-Authorize3rd-partyapptoaccessShinedata|Misfit - Authorize a 3rd-party app}
         * @public
         */
         this.getAuthorizeUrl = function () {
@@ -174,6 +178,10 @@ var NodeMisfit = (function () {
         *
         * @param {String} authorizationCode - The authorization code to exchange for an access token
         * @param {Function(err, token)} callback - Optional callback to execute on completion of the request
+        *
+        * @throws {RequiredParameterError} Argument authorizationCode required
+        *
+        * @see {@link https://build.misfit.com/docs/references#APIReferences-Getaccesstokenfromauthorizedcode|Misfit - Get access token from authorized code}
         * @public
         */
         this.getAccessToken = function (authorizationCode, callback) {
@@ -207,6 +215,10 @@ var NodeMisfit = (function () {
         *   {String} userId - User id of the profile resource owner. If not specified assumed to be 'me'
         *   {String} objectId - Optional id of the specific profile resource to retrieve.
         * @param {Function(err, profile)} callback - Optional callback to execute on completion of the request
+        *
+        * @throws {RequiredParameterError} Argument accessToken required
+        *
+        * @see {@link https://build.misfit.com/docs/references#APIReferences-Profile|Misfit - Profile}
         * @public
         */
         this.getProfile = function (accessToken, options, callback) {
@@ -226,6 +238,10 @@ var NodeMisfit = (function () {
         *   {String} userId - User id of the device resource owner. If not specified assumed to be 'me'
         *   {String} objectId - Optional id of the specific device resource to retrieve.
         * @param {Function(err, device)} callback - Optional callback to execute on completion of the request
+        *
+        * @throws {RequiredParameterError} Argument accessToken required
+        *
+        * @see {@link https://build.misfit.com/docs/references#APIReferences-Device|Misfit - Device}
         * @public
         */
         this.getDevice = function (accessToken, options, callback) {
@@ -247,6 +263,12 @@ var NodeMisfit = (function () {
         *   {String} userId - User id of the goal resource owner. If not specified assumed to be 'me'
         *   {String} objectId - Optional id of the specific goal resource to retrieve.
         * @param {Function(err, goals)} callback - Optional callback to execute on completion of the request
+        *
+        * @throws {InvalidDateError} startDate and endDate must be valid dates in the format YYYY-MM-DD
+        * @throws {InvalidDateRangeError} startDate must precede endDate and the duration may not exceed 30 days
+        * @throws {RequiredParameterError} Arguments accessToken, startDate, endDate required
+        *
+        * @see {@link https://build.misfit.com/docs/references#APIReferences-Goal|Misfit - Goal}
         * @public
         */
         this.getGoals = function (accessToken, startDate, endDate, options, callback) {
@@ -271,6 +293,12 @@ var NodeMisfit = (function () {
         * @param {String} options - Optional set of options to configure the request.
         *   {String} userId - User id of the summary owner. If not specified assumed to be 'me'
         * @param {Function(err, summary)} callback - Optional callback to execute on completion of the request
+        *
+        * @throws {InvalidDateError} startDate and endDate must be valid dates in the format YYYY-MM-DD
+        * @throws {InvalidDateRangeError} startDate must precede endDate and the duration may not exceed 30 days
+        * @throws {RequiredParameterError} Arguments accessToken, startDate, endDate required
+        *
+        * @see {@link https://build.misfit.com/docs/references#APIReferences-Summary|Misfit - Summary}
         * @public
         */
         this.getSummary = function (accessToken, startDate, endDate, options, callback) {
@@ -297,6 +325,12 @@ var NodeMisfit = (function () {
         *   {String} userId - User id of the session resource owner. If not specified assumed to be 'me'
         *   {String} objectId - Optional id of the specific session resource to retrieve.
         * @param {Function(err, sessions)} callback - Optional callback to execute on completion of the request
+        *
+        * @throws {InvalidDateError} startDate and endDate must be valid dates in the format YYYY-MM-DD
+        * @throws {InvalidDateRangeError} startDate must precede endDate and the duration may not exceed 30 days
+        * @throws {RequiredParameterError} Arguments accessToken, startDate, endDate required
+        *
+        * @see {@link https://build.misfit.com/docs/references#APIReferences-Session|Misfit - Session}
         * @public
         */
         this.getSessions = function (accessToken, startDate, endDate, options, callback) {
@@ -322,6 +356,12 @@ var NodeMisfit = (function () {
         *   {String} userId - User id of the sleep resource owner. If not specified assumed to be 'me'
         *   {String} objectId - Optional id of the specific sleep resource to retrieve.
         * @param {Function(err, sleeps)} callback - Optional callback to execute on completion of the request
+        *
+        * @throws {InvalidDateError} startDate and endDate must be valid dates in the format YYYY-MM-DD
+        * @throws {InvalidDateRangeError} startDate must precede endDate and the duration may not exceed 30 days
+        * @throws {RequiredParameterError} Arguments accessToken, startDate, endDate required
+        *
+        * @see {@link https://build.misfit.com/docs/references#APIReferences-Sleep|Misfit - Sleep}
         * @public
         */
         this.getSleeps = function (accessToken, startDate, endDate, options, callback) {
@@ -342,9 +382,15 @@ var NodeMisfit = (function () {
         *
         * @param {Object} data - Subscription Amazon SNS message from Misfit Cloud API
         * @param {Function(err, sleeps)} callback - Optional callback to execute on completion of the request
+        *
+        * @throws {RequiredParameterError} Argument data required
+        *
+        * @see {@link https://build.misfit.com/docs/references#APIReferences-Confirmsubscription|Misfit - Confirm subscription}
         * @public
         */
         this.handleSubscription = function(data, callback) {
+            checkRequired(arguments, 'data');
+
             request
                 .get(data.subscribeurl)
                 .end(function (err, response) {
