@@ -1,12 +1,13 @@
 # node-misfit
 
-NodeJS library for interfacing with the [Misfit](http://misfit.com/) [Cloud API](https://build.misfit.com/docs/).
+[Node.js](http://nodejs.org/) and [io.js](https://iojs.org) library for interfacing with the [Misfit](http://misfit.com/) [Cloud API](https://build.misfit.com/docs/).
 
-[![Build Status](https://travis-ci.org/ArminTamzarian/node-misfit.png?branch=master)](https://travis-ci.org/ArminTamzarian/node-misfit)
+[![npm version](https://badge.fury.io/js/node-misfit.svg)](http://badge.fury.io/js/node-misfit)
+[![build status](https://travis-ci.org/ArminTamzarian/node-misfit.png?branch=master)](https://travis-ci.org/ArminTamzarian/node-misfit)
 
 ## Getting Started
 
-Install the library into node.js:
+Install the library into Node.js or io.js:
 
 ```
 npm install node-misfit
@@ -371,6 +372,12 @@ npm test
 ```
 
 ## Release notes
+
+### 0.1.2
+
+* Fixed invalid error object handling
+* Support for [io.js](https://iojs.org)
+* Mock API support with associated unit testing
 
 ### 0.1.1
 

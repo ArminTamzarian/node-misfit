@@ -51,17 +51,18 @@ var NodeMisfit = (function () {
      *   {String} clientSecret - Client secret for the Misfit API application
      *   {String} redirectUri - URL to redirect the browser to after authorization requests
      *   {String} scope - Data parameters to which requests should be limited
-     *
+     * @param {String} apiUrl - Optional URL to override the Misfit Cloud API base URL for testing or customization purposes
      * @public
      */
-    var nodeMisfit = function (options) {
+    var nodeMisfit = function (options, apiUrl) {
         options = options || {};
 
         var setup = {
             clientId: options.clientId || '',
             clientSecret: options.clientSecret || '',
             redirectUri: options.redirectUri || '',
-            scope: options.scope || 'public,birthday,email,tracking,session,sleeps'
+            scope: options.scope || 'public,birthday,email,tracking,session,sleeps',
+            apiUrl: apiUrl || MISFIT_CLOUD_BASE_URL
         };
 
         /**
@@ -150,8 +151,8 @@ var NodeMisfit = (function () {
                 .end(function (err, response) {
                     if(!isFunction(callback)) { return; }
 
-                    if (err) {
-                        return callback(err);
+                    if (response.error) {
+                        return callback(response.error);
                     }
 
                     callback(null, response.body);
@@ -165,7 +166,7 @@ var NodeMisfit = (function () {
         * @public
         */
         this.getAuthorizeUrl = function () {
-            return util.format('%s%s?%s', MISFIT_CLOUD_BASE_URL, PATH_AUTH_AUTHORIZE, querystring.stringify({
+            return util.format('%s%s?%s', setup.apiUrl, PATH_AUTH_AUTHORIZE, querystring.stringify({
                 response_type: 'code',
                 client_id: setup.clientId,
                 redirect_uri: setup.redirectUri,
@@ -188,7 +189,7 @@ var NodeMisfit = (function () {
             checkRequired(arguments, 'authorizationCode');
 
             request
-                .post(util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_AUTH_EXCHANGE_TOKEN))
+                .post(util.format('%s%s', setup.apiUrl, PATH_AUTH_EXCHANGE_TOKEN))
                 .send({
                     grant_type: 'authorization_code',
                     code: authorizationCode,
@@ -199,8 +200,8 @@ var NodeMisfit = (function () {
                 .end(function (err, response) {
                     if(!isFunction(callback)) { return; }
 
-                    if(err) {
-                        return callback(err);
+                    if(response.error) {
+                        return callback(response.error);
                     }
 
                     callback(null, response.body.access_token);
@@ -227,7 +228,7 @@ var NodeMisfit = (function () {
             callback = callback || options;
             options = options || {};
 
-            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_PROFILE), {}, options.userId, options.objectId, callback);
+            getResource(accessToken, util.format('%s%s', setup.apiUrl, PATH_RESOURCE_PROFILE), {}, options.userId, options.objectId, callback);
         };
 
         /**
@@ -250,7 +251,7 @@ var NodeMisfit = (function () {
             callback = callback || options;
             options = options || {};
 
-            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_DEVICE), {}, options.userId, options.objectId, callback);
+            getResource(accessToken, util.format('%s%s', setup.apiUrl, PATH_RESOURCE_DEVICE), {}, options.userId, options.objectId, callback);
         };
 
         /**
@@ -278,7 +279,7 @@ var NodeMisfit = (function () {
             callback = callback || options;
             options = options || {};
 
-            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_GOALS), {
+            getResource(accessToken, util.format('%s%s', setup.apiUrl, PATH_RESOURCE_GOALS), {
                 start_date: startDate,
                 end_date: endDate
             }, options.userId, options.objectId, callback);
@@ -309,7 +310,7 @@ var NodeMisfit = (function () {
             callback = callback || options;
             options = options || {};
 
-            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_SUMMARY), {
+            getResource(accessToken, util.format('%s%s', setup.apiUrl, PATH_RESOURCE_SUMMARY), {
                 start_date: startDate,
                 end_date: endDate,
                 detail: options.detail || false
@@ -341,7 +342,7 @@ var NodeMisfit = (function () {
             callback = callback || options;
             options = options || {};
 
-            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_SESSIONS), {
+            getResource(accessToken, util.format('%s%s', setup.apiUrl, PATH_RESOURCE_SESSIONS), {
                 start_date: startDate,
                 end_date: endDate
             }, options.userId, options.objectId, callback);
@@ -372,7 +373,7 @@ var NodeMisfit = (function () {
             callback = callback || options;
             options = options || {};
 
-            getResource(accessToken, util.format('%s%s', MISFIT_CLOUD_BASE_URL, PATH_RESOURCE_SLEEPS), {
+            getResource(accessToken, util.format('%s%s', setup.apiUrl, PATH_RESOURCE_SLEEPS), {
                 start_date: startDate,
                 end_date: endDate
             }, options.userId, options.objectId, callback);
