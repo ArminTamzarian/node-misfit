@@ -51,6 +51,7 @@ var MisfitMock = (function () {
 
         server.listen(options.port, function() {
             console.log(server);
+            console.log(server.url);
             callback();
         });
     };
