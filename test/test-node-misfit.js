@@ -14,8 +14,9 @@ describe('node-misfit tests', function () {
 
     before(function (done) {
         misfitMock = new (require('./mock-api.misfitwearables.com'))({
-            port: 9999
+            port: 3000
         }, function() {
+            console.log(misfitMock);
             misfitHandler = new misfit({
                 clientId: misfitMock.client.id,
                 clientSecret: misfitMock.client.secret
