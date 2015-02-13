@@ -37,8 +37,6 @@ var MisfitMock = (function () {
             });
         });
 
-        server.listen(options.port, callback);
-
         this.__defineGetter__('url', function () {
             return server.url;
         });
@@ -49,6 +47,11 @@ var MisfitMock = (function () {
 
         this.__defineGetter__('auth', function () {
             return VALID_AUTH;
+        });
+
+        server.listen(options.port, function() {
+            console.log(server);
+            callback();
         });
     };
 
