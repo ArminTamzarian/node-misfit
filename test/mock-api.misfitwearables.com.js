@@ -49,11 +49,7 @@ var MisfitMock = (function () {
             return VALID_AUTH;
         });
 
-        server.listen(options.port, function() {
-            console.log(server);
-            console.log(server.url);
-            callback();
-        });
+        server.listen(options.port, '127.0.0.1', callback);
     };
 
     return misfitMock;
