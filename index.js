@@ -29,6 +29,16 @@ function RequiredParameterError(parameters) {
 }
 RequiredParameterError.prototype = Error.prototype;
 
+function MisfitError(error) {
+    var errorData = error.text ? JSON.parse(error.text) : {type: 'unknown', error_description: 'Unexpected error'};
+
+    this.name = 'MisfitError';
+    this.status = error.status;
+    this.type = errorData.error || 'api';
+    this.message = errorData.error_description || errorData.message;
+};
+MisfitError.prototype = Error.prototype;
+
 var NodeMisfit = (function () {
     var MISFIT_CLOUD_BASE_URL = 'https://api.misfitwearables.com';
     var MISFIT_DEFAULT_USERID = 'me';
@@ -152,7 +162,7 @@ var NodeMisfit = (function () {
                     if(!isFunction(callback)) { return; }
 
                     if (response.error) {
-                        return callback(response.error);
+                        return callback(new MisfitError(response.error));
                     }
 
                     callback(null, response.body);
@@ -201,7 +211,7 @@ var NodeMisfit = (function () {
                     if(!isFunction(callback)) { return; }
 
                     if(response.error) {
-                        return callback(response.error);
+                        return callback(new MisfitError(response.error));
                     }
 
                     callback(null, response.body.access_token);

@@ -359,6 +359,12 @@ Error indicating an invalid date range has been supplied.
 
 * `message` - (String) Optional custom error message.
 
+### MisfitError(`error`)
+
+Error indicating an issue with authentication or authorization while accessing a Misfit resource.
+
+* `error` - (Object) Originating error object parsed from API call.
+
 ### RequiredParameterError(`parameters`)
 
 Error indicating that required parameters for a function has not been provided.
@@ -376,6 +382,7 @@ npm test
 ### 0.1.2
 
 * Fixed invalid error object handling
+* Addition of `MisfitError` and integration into Misfit Cloud API calls
 * Support for [io.js](https://iojs.org)
 * Mock API support with associated unit testing
 
