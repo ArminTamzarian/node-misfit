@@ -23,12 +23,6 @@ function InvalidDateRangeError(message) {
 }
 InvalidDateRangeError.prototype = Error.prototype;
 
-function RequiredParameterError(parameters) {
-    this.name = 'RequiredParameterError';
-    this.message = util.format('Required parameter%s missing: %s', parameters.length > 1 ? '(s)' : '', parameters.join(', '));
-}
-RequiredParameterError.prototype = Error.prototype;
-
 function MisfitError(error) {
     var errorData = error.text ? JSON.parse(error.text) : {type: 'unknown', error_description: 'Unexpected error'};
 
@@ -38,6 +32,12 @@ function MisfitError(error) {
     this.message = errorData.error_description || errorData.message;
 };
 MisfitError.prototype = Error.prototype;
+
+function RequiredParameterError(parameters) {
+    this.name = 'RequiredParameterError';
+    this.message = util.format('Required parameter%s missing: %s', parameters.length > 1 ? '(s)' : '', parameters.join(', '));
+}
+RequiredParameterError.prototype = Error.prototype;
 
 var NodeMisfit = (function () {
     var MISFIT_CLOUD_BASE_URL = 'https://api.misfitwearables.com';
