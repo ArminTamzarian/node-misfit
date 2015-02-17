@@ -120,8 +120,8 @@ var NodeMisfit = (function () {
         * @private
         */
         var validateDates = function (startDate, endDate) {
-            var startMoment = moment(startDate, "YYYY-MM-DD");
-            var endMoment = moment(endDate, "YYYY-MM-DD");
+            var startMoment = moment(startDate, 'YYYY-MM-DD');
+            var endMoment = moment(endDate, 'YYYY-MM-DD');
 
             if(!startMoment.isValid()) {
                 throw new InvalidDateError(util.format('Invalid startDate %s', startDate));
