@@ -5,6 +5,7 @@ var misfit = require('../');
 
 var InvalidDateError = misfit.InvalidDateError;
 var InvalidDateRangeError = misfit.InvalidDateRangeError;
+var InvalidParameterError = misfit.InvalidParameterError;
 var RequiredParameterError = misfit.RequiredParameterError;
 
 describe('node-misfit functionality tests', function () {
@@ -47,6 +48,27 @@ describe('node-misfit functionality tests', function () {
                 })
             });
             done();
+        });
+    });
+    describe('#getAuthorizeUrl', function () {
+        it('invalid type', function () {
+            assert.throws( function() {
+                misfitHandler.getAuthorizeUrl('foobar');
+            }, InvalidParameterError);
+        });
+
+        it('valid parameters', function () {
+            assert.doesNotThrow( function() {
+                misfitHandler.getAuthorizeUrl();
+            }, InvalidParameterError);
+
+            assert.doesNotThrow( function() {
+                misfitHandler.getAuthorizeUrl('code');
+            }, InvalidParameterError);
+
+            assert.doesNotThrow( function() {
+                misfitHandler.getAuthorizeUrl('token');
+            }, InvalidParameterError);
         });
     });
 
@@ -92,7 +114,6 @@ describe('node-misfit functionality tests', function () {
                 misfitHandler.getProfile();
             }, RequiredParameterError);
         });
-
 
         it('invalid access token', function (done) {
             misfitHandler.getProfile('invalid', function (err, profile) {

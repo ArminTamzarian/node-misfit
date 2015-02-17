@@ -59,11 +59,17 @@ node-misfit constructor
 
 - - -
 
-### getAuthorizeUrl()
+### getAuthorizeUrl([`type`])
 
 Get the authorization URL for the configured node-misfit object
 
 [Misfit - Authorize a 3rd-party app](https://build.misfit.com/docs/references#APIReferences-Authorize3rd-partyapptoaccessShinedata)
+
+#### Parameters
+* `type` (String) Type of response to the request of type `code` or `token`. `Default: 'code'`
+
+#### Throws
+* `InvalidParameterError`: Argument `type` must be `code` or `token`
 
 #### Example
 ```javascript
@@ -359,6 +365,12 @@ Error indicating an invalid date range has been supplied.
 
 * `message` - (String) Optional custom error message.
 
+### InvalidParameterError([`message`])
+
+Error indicating an invalid parameter value has been supplied.
+
+* `message` - (String) Optional custom error message.
+
 ### MisfitError(`error`)
 
 Error indicating an issue with authentication or authorization while accessing a Misfit resource.
@@ -377,7 +389,16 @@ Error indicating that required parameters for a function has not been provided.
 npm test
 ```
 
+## Contributors
+
+* [brianpowell](https://github.com/brianpowell) - [Pull Request #1](https://github.com/ArminTamzarian/node-misfit/pull/1)
+
 ## Release notes
+
+### 0.1.3
+
+* Addition of `type` parameter to `getAuthorizeUrl`
+* Addition of `InvalidParameterError`
 
 ### 0.1.2
 

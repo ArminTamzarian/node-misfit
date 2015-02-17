@@ -23,6 +23,12 @@ function InvalidDateRangeError(message) {
 }
 InvalidDateRangeError.prototype = Error.prototype;
 
+function InvalidParameterError(message) {
+    this.name = 'InvalidParameterError';
+    this.message = message
+}
+InvalidParameterError.prototype = Error.prototype;
+
 function MisfitError(error) {
     var errorData = error.text ? JSON.parse(error.text) : {type: 'unknown', error_description: 'Unexpected error'};
 
@@ -172,12 +178,20 @@ var NodeMisfit = (function () {
         /**
         * Get the authorization URL for the configured node-misfit object
         *
+        * @param {String} type - Type of response to the request of type 'code' or 'token'. If not specified 'code'.
+        *
         * @see {@link https://build.misfit.com/docs/references#APIReferences-Authorize3rd-partyapptoaccessShinedata|Misfit - Authorize a 3rd-party app}
         * @public
         */
         this.getAuthorizeUrl = function (type) {
+            var responseType = type || 'code';
+
+            if(responseType !== 'code' && responseType !== 'token') {
+                throw new InvalidParameterError('type must be of value "code" or "token"')
+            }
+
             return util.format('%s%s?%s', setup.apiUrl, PATH_AUTH_AUTHORIZE, querystring.stringify({
-                response_type: type || 'code',
+                response_type: responseType,
                 client_id: setup.clientId,
                 redirect_uri: setup.redirectUri,
                 scope: setup.scope
@@ -419,4 +433,5 @@ var NodeMisfit = (function () {
 module.exports = NodeMisfit;
 module.exports.InvalidDateError = InvalidDateError;
 module.exports.InvalidDateRangeError = InvalidDateRangeError;
+module.exports.InvalidParameterError = InvalidParameterError;
 module.exports.RequiredParameterError = RequiredParameterError;

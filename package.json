@@ -1,8 +1,11 @@
 {
     "name" : "node-misfit",
     "description" : "NodeJS library for interfacing with the Misfit Cloud API.",
-    "version" : "0.1.2",
+    "version" : "0.1.3",
     "author" : "Armin Tamzarian <tamzarian1989@gmail.com>",
+    "contributors": [
+        "brianpowell"
+    ],
     "url" : "https://github.com/ArminTamzarian/node-misfit",
     "keywords" : ["misfit", "shine", "cloud", "api"],
     "repository" : {
