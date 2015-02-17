@@ -175,9 +175,9 @@ var NodeMisfit = (function () {
         * @see {@link https://build.misfit.com/docs/references#APIReferences-Authorize3rd-partyapptoaccessShinedata|Misfit - Authorize a 3rd-party app}
         * @public
         */
-        this.getAuthorizeUrl = function () {
+        this.getAuthorizeUrl = function (type) {
             return util.format('%s%s?%s', setup.apiUrl, PATH_AUTH_AUTHORIZE, querystring.stringify({
-                response_type: 'code',
+                response_type: type || 'code',
                 client_id: setup.clientId,
                 redirect_uri: setup.redirectUri,
                 scope: setup.scope
